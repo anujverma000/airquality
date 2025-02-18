@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AirQuality {
+  timestamp DateTime  @id
+  co_gt     Float?
+  pt08_s1_co Int?
+  nmhc_gt   Float?
+  c6h6_gt   Float?
+  pt08_s2_nmhc Int?
+  nox_gt    Float?
+  pt08_s3_nox Int?
+  no2_gt    Float?
+  pt08_s4_no2 Int?
+  pt08_s5_o3 Int?
+  temperature Float?
+  rh        Float?
+  ah        Float?
+}
