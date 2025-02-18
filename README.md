@@ -1,3 +1,6 @@
+## ENV
+Rename the .evn.example to .env and set the values
+
 ## upload
 ```curl -X POST -H "Content-Type: text/csv" --data-binary  @/path_to_data/AirQualityUCI.csv http://localhost:3000/api/upload```
 
