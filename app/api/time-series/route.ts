@@ -19,7 +19,7 @@ const PARAM_MAP: { [key: string]: string } = {
 }
 
 export const dynamic = 'force-dynamic'
-
+const CACHE_MAX_AGE = 60 // cache for 1 minute
 /**
  * @openapi
  * /time-series:
@@ -119,13 +119,21 @@ export async function GET(request: NextRequest) {
       value: item[PARAM_MAP[parameter] as keyof typeof item]
     }))
 
-    return NextResponse.json(formatted)
+    const response = NextResponse.json(formatted)
+    response.headers.set(
+      'Cache-Control',
+      `public, s-maxage=${CACHE_MAX_AGE}, stale-while-revalidate=${CACHE_MAX_AGE}`
+    )
+    
+
 
   } catch (error: any) {
-    console.error('Fetch error:', error)
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       { message: 'Error fetching data', error: error.message },
       { status: 500 }
     )
+    // Prevent caching of errors
+    errorResponse.headers.set('Cache-Control', 'no-store')
+    return errorResponse
   }
 }
