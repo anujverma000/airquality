@@ -1,5 +1,9 @@
 ## ENV
-Rename the .evn.example to .env and set the values
+Rename the .env.example to .env and set the values
+
+Lets start with api docs
+## Docs
+```http://localhost:3000/api/docs```
 
 ## upload
 ```curl -X POST -H "Content-Type: text/csv" --data-binary  @/path_to_data/AirQualityUCI.csv http://localhost:3000/api/upload```

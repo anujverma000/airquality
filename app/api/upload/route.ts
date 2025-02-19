@@ -4,6 +4,54 @@ import Papa from 'papaparse'
 
 export const dynamic = 'force-dynamic' // Disable static optimization
 
+/**
+ * @openapi
+ * /upload:
+ *   post:
+ *     summary: Upload air quality data from CSV
+ *     description: Endpoint for ingesting air quality data in CSV format
+ *     tags:
+ *       - Data Ingestion
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *                 description: CSV file containing air quality data
+ *     responses:
+ *       200:
+ *         description: CSV data uploaded successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 count:
+ *                   type: integer
+ *                   description: Number of records inserted
+ *       400:
+ *         description: Invalid request or missing file
+ *       405:
+ *         description: Method not allowed
+ *       500:
+ *         description: Server error during file processing
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 error:
+ *                   type: string
+ */
 export async function POST(request: NextRequest) {
   try {
     const reader = request.body?.getReader()

@@ -20,6 +20,46 @@ const PARAM_MAP: { [key: string]: string } = {
 
 export const dynamic = 'force-dynamic'
 
+/**
+ * @openapi
+ * /time-series:
+ *   get:
+ *     summary: Get time series data for a specific parameter
+ *     tags:
+ *       - Time Series
+ *     parameters:
+ *       - in: query
+ *         name: parameter
+ *         required: true
+ *         schema:
+ *           type: string
+ *           enum: ['CO', 'PT08_S1_CO', 'NMHC', 'Benzene', 'PT08_S2_NMHC', 'NOx', 'PT08_S3_NOx', 'NO2', 'PT08_S4_NO2', 'PT08_S5_O3', 'Temperature', 'Humidity', 'Absolute_Humidity']
+ *       - in: query
+ *         name: start_date
+ *         schema:
+ *           type: date
+ *           format: date
+ *       - in: query
+ *         name: end_date
+ *         schema:
+ *           type: date
+ *           format: date
+ *     responses:
+ *       200:
+ *         description: Time series data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   timestamp:
+ *                     type: string
+ *                     format: date-time
+ *                   value:
+ *                     type: number
+ */
 export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url)
