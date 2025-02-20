@@ -56,7 +56,6 @@ curl -X POST -H "Content-Type: text/csv" --data-binary  @/path_to_data/AirQualit
 
 # Production deployment
 - Its deployed on vercel, you can access it [https://airquality-anuj.vercel.app/](https://airquality-anuj.vercel.app/)
-- The database is hosted on [neon.tech](https://neon.tech/)
 
 
 ## Docs
@@ -98,6 +97,10 @@ http://localhost:3000/api/time-series?parameters=Temperature__CO&start_date=2004
 - Add NLP support for query
 
 ## Screenshots
+![Mobile](https://raw.githubusercontent.com/anujverma000/airquality/refs/heads/main/screenshots/Screenshot%202025-02-21%20at%203.05.50%E2%80%AFAM.png)
+![Desktop](https://raw.githubusercontent.com/anujverma000/airquality/refs/heads/main/screenshots/Screenshot%202025-02-21%20at%203.06.06%E2%80%AFAM.png)
+![Dark mode](https://raw.githubusercontent.com/anujverma000/airquality/refs/heads/main/screenshots/Screenshot%202025-02-21%20at%203.07.28%E2%80%AFAM.png)
+
 
 ## License
 This work is licensed under the [MIT License](https://github.com/anujverma000/airquality/blob/main/LICENCE).
