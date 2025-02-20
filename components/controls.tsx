@@ -1,7 +1,7 @@
 'use client';
 import { MultiSelect } from '@/components/ui/multiselect';
 import { DateRangePicker } from './ui/daterange';
-import { SearchParameters } from '@/app/page';
+import { SearchParameters } from '@/constants';
 
 interface ControlsProps {
   selectedParams: string[];

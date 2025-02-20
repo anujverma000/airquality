@@ -1,0 +1,1 @@
+export const SearchParameters = ['CO', 'PT08_S1_CO', 'NMHC', 'Benzene', 'PT08_S2_NMHC', 'NOx', 'PT08_S3_NOx', 'NO2', 'PT08_S4_NO2', 'PT08_S5_O3', 'Temperature', 'Humidity', 'Absolute_Humidity'];
