@@ -17,9 +17,18 @@ const PARAM_MAP: { [key: string]: string } = {
   'Humidity': 'rh',
   'Absolute_Humidity': 'ah'
 }
+type DisplayKey = keyof typeof PARAM_MAP;
+type DbKey = typeof PARAM_MAP[DisplayKey];
 
+const REVERSE_PARAM_MAP = Object.entries(PARAM_MAP).reduce((acc, [key, value]) => {
+  acc[value] = key as DisplayKey;
+  return acc;
+}, {} as Record<DbKey, DisplayKey>);
+
+const DEFAULT_ALL_PARAMETERS = Object.keys(PARAM_MAP)
 export const dynamic = 'force-dynamic'
 const CACHE_MAX_AGE = 60 // cache for 1 minute
+
 /**
  * @openapi
  * /time-series:
@@ -65,18 +74,12 @@ export async function GET(request: NextRequest) {
     const url = new URL(request.url)
     const params = url.searchParams
     
-    // Get main parameter to select
-    const parameter = params.get('parameter')
-    if (!parameter || !PARAM_MAP[parameter]) {
-      return NextResponse.json(
-        { 
-          message: 'Invalid parameter',
-          valid_parameters: Object.keys(PARAM_MAP)
-        },
-        { status: 400 }
-      )
+    // Get all parameters to select
+    const parameters = (params.get('parameters') || DEFAULT_ALL_PARAMETERS.join('__')).split('__')
+    let validParams = parameters.filter(p => DEFAULT_ALL_PARAMETERS.includes(p));
+    if (validParams.length === 0) {
+      validParams = DEFAULT_ALL_PARAMETERS
     }
-
     // Build date filter
     const dateFilter = {
       ...(params.get('start_date') && { gte: new Date(params.get('start_date')!) }),
@@ -84,9 +87,9 @@ export async function GET(request: NextRequest) {
     }
 
     // Build additional filters
-    const filters: { [key: string]: number } = {}
+    const filters: Array<{ [key: string]: number }> = []
     params.forEach((value, key) => {
-      if (key === 'parameter' || key === 'start_date' || key === 'end_date') return
+      if (key === 'parameters' || key === 'start_date' || key === 'end_date') return
       
       if (PARAM_MAP[key]) {
         const dbField = PARAM_MAP[key] as keyof AirQuality
@@ -102,22 +105,34 @@ export async function GET(request: NextRequest) {
       ...(Object.keys(dateFilter).length > 0 && { timestamp: dateFilter }),
       ...filters
     }
+    const selectedFields = {}
+    for (const param of validParams) {
+      selectedFields[PARAM_MAP[param]] = true
+    }
 
     // Execute query
     const data = await prisma.airQuality.findMany({
       where: whereClause,
       select: {
         timestamp: true,
-        [PARAM_MAP[parameter]]: true
+        ...selectedFields
       },
       orderBy: { timestamp: 'asc' }
     })
-
     // Format response
-    const formatted = data.map(item => ({
-      timestamp: (item.timestamp as Date).toISOString(),
-      value: item[PARAM_MAP[parameter] as keyof typeof item]
-    }))
+    function renameKeys<T extends Record<DbKey, any>>(dataFromDb: T): Record<DisplayKey, any> {
+      return Object.entries(dataFromDb).reduce((acc, [dbKey, value]) => {
+        const originalKey = REVERSE_PARAM_MAP[dbKey as DbKey];
+        if(originalKey){
+          acc[originalKey] = value;
+        }
+        return acc;
+      }, {} as Record<DisplayKey, any>);
+    }
+    const formatted = data.map(item => {
+      const timestamp = (item.timestamp as Date).toISOString()
+      return {...renameKeys(item), timestamp}
+    })
 
     const response = NextResponse.json(formatted)
     response.headers.set(
@@ -125,7 +140,7 @@ export async function GET(request: NextRequest) {
       `public, s-maxage=${CACHE_MAX_AGE}, stale-while-revalidate=${CACHE_MAX_AGE}`
     )
     
-
+    return response
 
   } catch (error: any) {
     const errorResponse = NextResponse.json(
