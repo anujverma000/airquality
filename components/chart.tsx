@@ -1,8 +1,8 @@
 'use client';
 import { AirQualityData } from '@/app/page';
 import ReactECharts from 'echarts-for-react';
-import { useState } from 'react';
-import { LineChart, BarChart, PieChart } from "lucide-react"
+import { useEffect, useState } from 'react';
+import { LineChart, BarChart } from "lucide-react"
 
 interface ChartProps {
   data: AirQualityData[];
@@ -10,12 +10,23 @@ interface ChartProps {
 }
 
 const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#413ea0'];
-
-type ChartType = 'line' | 'bar' | 'pie';
+const LegentCount = 3
+type ChartType = 'line' | 'bar';
 
 export const AirQualityChart = ({ data, parameters }: ChartProps) => {
   const [charType, setChartType] = useState<ChartType>('line');
-
+  const [theme, setTheme] = useState('light');
+  const updateTheme = () => {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(prefersDark ? 'dark' : 'light');
+  };
+  useEffect(() => {
+    updateTheme();
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = () => updateTheme();
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
   const options = {
     grid: { top: 40, right: 40, bottom: 40, left: 60 },
     tooltip: {
@@ -41,8 +52,9 @@ export const AirQualityChart = ({ data, parameters }: ChartProps) => {
       data: data?.map(d => [d.timestamp, d[param]])
     })),
     legend: {
-      data: parameters,
-      bottom: 0
+      data: parameters.slice(0, LegentCount),
+      paddingTop: 10,
+      bottom: 0,
     }
   };
 
@@ -54,18 +66,17 @@ export const AirQualityChart = ({ data, parameters }: ChartProps) => {
           <button
             key={chart}
             data-active={charType === chart}
-            className="flex flex-col justify-center gap-1 px-6 py-4 text-left data-[active=true]:bg-muted/50"
+            className="flex flex-col justify-center gap-1 p-2 rounded text-left data-[active=true]:bg-amber-300"
             onClick={() => setChartType(chart)}
           >
             <span className="text-xs text-muted-foreground">
-              {chart === 'line' && <LineChart />}
-              {chart === 'bar' && <BarChart />}
-              {chart === 'pie' && <PieChart />}
+              {chart === 'line' && <div className='flex gap-2 justify-center items-start'><LineChart className='w-4 h-4'/> Line</div>}
+              {chart === 'bar' &&  <div className='flex gap-2 justify-center items-start'><BarChart className='w-4 h-4'/>  Bar</div>}
             </span>
           </button>
         )
       })}
     </div>
-    <ReactECharts option={options} style={{ height: 400, width: '100%' }} />
+    <ReactECharts option={options} style={{ height: 300, width: '100%' }} theme={theme} />
   </>
 };

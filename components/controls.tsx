@@ -20,7 +20,7 @@ export const Controls = ({
   onStartDateChange,
   onEndDateChange
 }: ControlsProps) => (
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div className="flex flex-row gap-4 flex-wrap">
     <MultiSelect
       selectedOptions={selectedParams}
       setSelectedOptions={onParamsChange}

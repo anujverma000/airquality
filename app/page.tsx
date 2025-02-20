@@ -35,23 +35,25 @@ const DashboardPage = () => {
     },
     staleTime: 1000 * 60
   });
-  
+
   if (isError) return <div className="p-4 text-red-500">Error loading data</div>;
 
   return (
     <div className="p-4 space-y-6">
-      <Controls
-        selectedParams={selectedParams}
-        onParamsChange={setSelectedParams}
-        startDate={startDate}
-        endDate={endDate}
-        onStartDateChange={setStartDate}
-        onEndDateChange={setEndDate}
-      />
-
       <Card>
         <CardHeader>
-          <CardTitle>Air Quality Trends</CardTitle>
+          <div className='flex flex-row flex-wrap gap-4 justify-between items-center'>
+            <CardTitle>Air Quality Trends</CardTitle>
+            <Controls
+              selectedParams={selectedParams}
+              onParamsChange={setSelectedParams}
+              startDate={startDate}
+              endDate={endDate}
+              onStartDateChange={setStartDate}
+              onEndDateChange={setEndDate}
+            />
+
+          </div>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -60,12 +62,9 @@ const DashboardPage = () => {
             <AirQualityChart data={data} parameters={selectedParams} />
           )}
         </CardContent>
-      </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Raw Data</CardTitle>
-        </CardHeader>
+
+
         <CardContent>
           {isLoading ? (
             <TableSkeleton columns={selectedParams.length + 1} />

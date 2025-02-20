@@ -3,6 +3,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { AirQualityData } from '@/app/page';
+import { format } from "date-fns"
 
 interface DataTableProps {
   data: AirQualityData[];
@@ -32,9 +33,14 @@ export const DataTable = ({
       <TableBody>
         {data?.map((row, i) => (
           <TableRow key={i}>
-            <TableCell>{new Date(row.timestamp).toLocaleString()}</TableCell>
+            <TableCell>
+              <div className='text-xs'>{format(new Date(row.timestamp), "LLL dd, y __ p").split("__")[0]}</div>
+              <div className='text-muted-foreground text-xs'>{format(new Date(row.timestamp), "LLL dd, y __ p").split("__")[1]}</div>
+            </TableCell>
             {parameters.map(param => (
-              <TableCell key={param}>{row[param]}</TableCell>
+              <TableCell key={param}>
+                <span className='text-xs'>{row[param]}</span>
+              </TableCell>
             ))}
           </TableRow>
         ))}
