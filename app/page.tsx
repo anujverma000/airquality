@@ -1,14 +1,16 @@
-'use client';
+"use client"
 
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Controls } from '@/components/controls';
 import { AirQualityChart } from '@/components/chart';
 import { DataTable } from '@/components/data-table';
 import { ChartSkeleton, TableSkeleton } from '@/components/skeletons';
-import { formatDate } from '@/lib/utils';
-import { SearchParameters } from '@/constants';
+import { DATA_PAGE_SIZE, DATA_START_DATE, DEFAULT_END_DATE, SearchParameters } from '@/constants';
+import { PanelBottom, PanelTop, Rows2 } from 'lucide-react';
+import useAirQuality from '@/hooks/useAirQuality';
+
 export interface AirQualityData {
   timestamp: string;
   [key: string]: number | string;
@@ -16,34 +18,46 @@ export interface AirQualityData {
 
 const DashboardPage = () => {
   const [selectedParams, setSelectedParams] = useState<string[]>(SearchParameters);
-  const [startDate, setStartDate] = useState<Date>(new Date('2004-03-10'));
-  const [endDate, setEndDate] = useState<Date>(new Date('2005-04-04'));
-  const [currentPage, setCurrentPage] = useState(1);
+  const [startDate, setStartDate] = useState<Date>(DATA_START_DATE);
+  const [endDate, setEndDate] = useState<Date>(DEFAULT_END_DATE);
+  const [displaySetting, setDisplaySetting] = useState({
+    chart: true,
+    table: true
+  });
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['airQualityData', selectedParams, startDate, endDate, currentPage],
-    queryFn: async () => {
-      const params = new URLSearchParams({
-        parameters: selectedParams.join('__'),
-        start_date: formatDate(startDate),
-        end_date: formatDate(endDate),
-      });
+  const hideTable = () => {
+    setDisplaySetting({
+      chart: true,
+      table: false
+    });
+  }
+  const hideChart = () => {
+    setDisplaySetting({
+      chart: false,
+      table: true
+    });
+  }
+  const resetDisplaySetting = () => {
+    setDisplaySetting({
+      chart: true,
+      table: true
+    });
+  }
 
-      const response = await fetch(`/api/time-series?${params}`);
-      if (!response.ok) throw new Error('Failed to fetch data');
-      return response.json();
-    },
-    staleTime: 1000 * 60
+  const { data, isLoading, isError } = useAirQuality({
+    selectedParams,
+    startDate,
+    endDate
   });
 
   if (isError) return <div className="p-4 text-red-500">Error loading data</div>;
 
   return (
-    <div className="p-4 space-y-6">
+    <div className="p-4 sm:p-20">
       <Card>
-        <CardHeader>
+        <CardHeader className='border-b'>
           <div className='flex flex-row flex-wrap gap-4 justify-between items-center'>
-            <CardTitle>Air Quality Trends</CardTitle>
+            <CardTitle>Trends</CardTitle>
             <Controls
               selectedParams={selectedParams}
               onParamsChange={setSelectedParams}
@@ -55,7 +69,7 @@ const DashboardPage = () => {
 
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className={displaySetting.chart ? '' : 'hidden'}>
           {isLoading ? (
             <ChartSkeleton />
           ) : (
@@ -63,18 +77,27 @@ const DashboardPage = () => {
           )}
         </CardContent>
 
+        <CardHeader className='border-b border-t'>
+          <div className='flex flex-row flex-wrap gap-4 items-center justify-center  hover:bg-muted w-fit px-4 py-2 rounded-lg m-auto'>
+            <Button variant='ghost' size='lg' className='p-0 h-auto text-blue-300 hover:text-blue-500' onClick={resetDisplaySetting}>
+              <Rows2 />
+            </Button>
+            <Button variant='ghost' size='lg' className='p-0 h-auto text-blue-300 hover:text-blue-500' onClick={hideTable}>
+              <PanelBottom />
+            </Button>
+            <Button variant='ghost' size='lg' className='p-0 h-auto text-blue-300 hover:text-blue-500' onClick={hideChart}>
+              <PanelTop />
+            </Button>
+          </div>
+        </CardHeader>
 
-
-        <CardContent>
+        <CardContent className={displaySetting.table ? '' : 'hidden'}>
           {isLoading ? (
-            <TableSkeleton columns={selectedParams.length + 1} />
+            <TableSkeleton columns={DATA_PAGE_SIZE} />
           ) : (
             <DataTable
               data={data}
               parameters={selectedParams}
-              currentPage={currentPage}
-              onPageChange={setCurrentPage}
-              isPreviousDisabled={currentPage === 1 || isLoading}
             />
           )}
         </CardContent>

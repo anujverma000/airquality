@@ -1,11 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
 
-import { cn } from "@/lib/utils"
+import { cn, formatDate } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -19,6 +18,8 @@ interface DateRangePicker {
   to: Date;
   onStartDateChange: (date: Date) => void;
   onEndDateChange: (date: Date) => void;
+  min?: Date;
+  max?: Date;
 }
 
 function DateRangePicker({
@@ -26,6 +27,8 @@ function DateRangePicker({
   to,
   onStartDateChange,
   onEndDateChange,
+  min,
+  max,
 
 }: DateRangePicker) {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -43,7 +46,6 @@ function DateRangePicker({
       onEndDateChange(date.to)
     }
   }
-
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
@@ -51,23 +53,16 @@ function DateRangePicker({
           id="date"
           variant={"outline"}
           className={cn(
-            "w-fit justify-start text-left font-normal",
+            "w-64 justify-start text-left font-normal",
             !date && "text-muted-foreground"
           )}
         >
           <CalendarIcon />
-          {date?.from ? (
-            date.to ? (
-              <>
-                {format(date.from, "LLL dd, y")} -{" "}
-                {format(date.to, "LLL dd, y")}
-              </>
-            ) : (
-              format(date.from, "LLL dd, y")
-            )
-          ) : (
-            <span>Pick a date</span>
-          )}
+          {
+            date?.from ? 
+            (date.to ? <>{formatDate(date.from)} - {formatDate(date.to)}</> : <>{formatDate(date.from)} -</>) 
+            : <span>Pick a date range</span>
+          }
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
@@ -77,9 +72,11 @@ function DateRangePicker({
           defaultMonth={date?.from}
           selected={date}
           onSelect={setDate}
+          fromDate={min}
+          toDate={max}
         />
         <div className="p-2">
-          <Button onClick={applyDateFilter} className="w-full">Apply</Button>
+          <Button onClick={applyDateFilter} className="w-full" disabled={!date?.from || !date?.to}>Apply</Button>
         </div>
       </PopoverContent>
     </Popover>

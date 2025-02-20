@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { QueryProvider } from './providers/QueryProvider';
 import { ThemeProvider } from './providers/ThemeProvider';
+import Header from '@/components/header';
+import Footer from '@/components/footer';
+
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -11,13 +14,9 @@ export const metadata: Metadata = {
   description: 'Air quality monitoring application',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link href="https://framerusercontent.com/images/qBqOOSCX2e2KfSFhV5nl0hHMfA.png" rel="icon" media="(prefers-color-scheme: light)" />
         <link href="https://framerusercontent.com/images/qBqOOSCX2e2KfSFhV5nl0hHMfA.png" rel="icon" media="(prefers-color-scheme: dark)" />
@@ -29,7 +28,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <Header />
+            {children}
+            <Footer />
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

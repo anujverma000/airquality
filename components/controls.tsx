@@ -1,7 +1,8 @@
-'use client';
+"use client"
+
 import { MultiSelect } from '@/components/ui/multiselect';
 import { DateRangePicker } from './ui/daterange';
-import { SearchParameters } from '@/constants';
+import { DATA_END_DATE, DATA_START_DATE, SearchParameters } from '@/constants';
 
 interface ControlsProps {
   selectedParams: string[];
@@ -31,7 +32,14 @@ export const Controls = ({
         }))
       }
       placeholder="Select parameters"
+      preText="Selected Parameters"
     />
-    <DateRangePicker from={startDate} to={endDate} onStartDateChange={onStartDateChange} onEndDateChange={onEndDateChange} />
+    <DateRangePicker 
+      from={startDate} 
+      to={endDate} 
+      onStartDateChange={onStartDateChange} 
+      onEndDateChange={onEndDateChange} 
+      min={DATA_START_DATE}
+      max={DATA_END_DATE}/>
   </div>
 );
