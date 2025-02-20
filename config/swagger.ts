@@ -13,7 +13,7 @@ const options: swaggerJSDoc.Options = {
       { url: 'https://airquality-anuj.vercel.app/api', description: 'Production server' },
     ],
   },
-  apis: ['./app/api/**/*.ts'], // Path to your API routes
+  apis: ['./app/api/**/*.ts'],
 };
 
 export const swaggerSpec = swaggerJSDoc(options);

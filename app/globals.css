@@ -67,8 +67,17 @@ body {
   * {
     @apply border-border;
   }
+  html{
+    @apply h-full;
+  }
   body{
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground min-h-full m-0 flex flex-col;
+  }
+  main{
+    @apply flex-1;
+  }
+  footer{
+    @apply shrink-0
   }
   .light body {
     background: linear-gradient(-45deg, #c5e3ff, #e5f9ff, #cef2ff, #e6fff9);

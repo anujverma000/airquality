@@ -59,24 +59,27 @@ export const DataTable = ({ data, parameters }: DataTableProps) => {
         </TableBody>
       </Table>
 
-      <div className={cn("flex justify-center items-center gap-2 my-4 border-t pt-4", totalPages <= 1 && 'hidden')}>
-        <Button
-          variant="outline"
-          disabled={isPreviousDisabled}
-          className='w-24'
-          onClick={() => onPageChange(currentPage - 1)}
-        >
-          Previous
-        </Button>
-        <span className='border px-4 py-2 rounded-full text-xs'>{ currentPage + 1} of { totalPages }</span>
-        <Button
-          variant="outline"
-          className='w-24'
-          disabled={isNextDisabled}
-          onClick={() => onPageChange(currentPage + 1)}
-        >
-          Next
-        </Button>
+      <div className={cn("flex justify-between items-center gap-2 my-4 border-t px-4 pt-4", totalPages <= 1 && 'hidden')}>
+        <p className='text-xs'>Showing {currentPage * DATA_PAGE_SIZE + 1} to {Math.min((currentPage + 1) * DATA_PAGE_SIZE, data.length)} of {data.length}</p>
+        <div className='flex items-center gap-4'>
+          <Button
+            variant="outline"
+            disabled={isPreviousDisabled}
+            className='w-24'
+            onClick={() => onPageChange(currentPage - 1)}
+          >
+            Previous
+          </Button>
+          <span className='border px-4 py-2 rounded-full text-xs'>{currentPage + 1}/{totalPages}</span>
+          <Button
+            variant="outline"
+            className='w-24'
+            disabled={isNextDisabled}
+            onClick={() => onPageChange(currentPage + 1)}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </>
   )

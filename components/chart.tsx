@@ -20,10 +20,10 @@ export const AirQualityChart = ({ data, parameters }: ChartProps) => {
   const [theme, setTheme] = useState(DEFAULT_THEME);
 
   const [charType, setChartType] = useState<ChartType>(() => localStorage.getItem("chart_type") as ChartType || DEFAULT_CHART_TYPE);
-  useEffect(() =>  localStorage.setItem("chart_type", `${charType}`), [charType]);
-  
+  useEffect(() => localStorage.setItem("chart_type", `${charType}`), [charType]);
+
   const [isSmooth, setSmooth] = useState(() => localStorage.getItem("smooth_chart") === 'true');
-  useEffect(() =>  localStorage.setItem("smooth_chart", `${isSmooth}`), [isSmooth]);
+  useEffect(() => localStorage.setItem("smooth_chart", `${isSmooth}`), [isSmooth]);
 
   const updateTheme = () => {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -94,14 +94,14 @@ export const AirQualityChart = ({ data, parameters }: ChartProps) => {
               onClick={() => setChartType(chart)}
             >
               <span className="text-xs">
-                {chart === 'line' && <div className='flex gap-2 justify-center items-start'><LineChart className='w-4 h-4' /> Line</div>}
-                {chart === 'bar' && <div className='flex gap-2 justify-center items-start'><BarChart className='w-4 h-4' />  Bar</div>}
+                {chart === 'line' && <div className='flex gap-2 justify-center items-start'><LineChart className='w-4 h-4' /> <Label>Line</Label></div>}
+                {chart === 'bar' && <div className='flex gap-2 justify-center items-start'><BarChart className='w-4 h-4' />  <Label>Bar</Label></div>}
               </span>
             </button>
           )
         })}
       </div>
-      <div className={cn("flex items-center space-x-2" , charType === 'bar' ? 'hidden' : '')}>
+      <div className={cn("flex items-center space-x-2", charType === 'bar' ? 'hidden' : '')}>
         <Switch id="smooth-chart"
           checked={isSmooth}
           onCheckedChange={handleSmoothChange}

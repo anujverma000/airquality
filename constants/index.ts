@@ -14,6 +14,11 @@ export const SearchParameters = [
   'Absolute_Humidity'
 ]
 
+export const DEFAULT_SELECTED_PARAMS = [
+  'Benzene',
+  'Temperature',
+]
+
 export const CHART_COLORS_LIGHT = [
   "#1E90FF",
   "#FF4500",
@@ -53,7 +58,7 @@ export const DEFAULT_THEME = 'light'
 export const DEFAULT_CHART_SMOOTH = true
 export const DATA_START_DATE = new Date('2004-03-10')
 export const DATA_END_DATE = new Date('2005-04-04')
-export const DEFAULT_END_DATE = new Date('2004-03-15')
+export const DEFAULT_END_DATE = new Date('2004-03-12')
 export const DATA_PAGE_SIZE = 10
 export const DATE_FORMAT = 'LLL dd, y'
 export const DATE_TIME_FORMAT = 'LLL dd, y __ p'

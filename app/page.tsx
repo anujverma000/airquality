@@ -7,7 +7,7 @@ import { Controls } from '@/components/controls';
 import { AirQualityChart } from '@/components/chart';
 import { DataTable } from '@/components/data-table';
 import { ChartSkeleton, TableSkeleton } from '@/components/skeletons';
-import { DATA_PAGE_SIZE, DATA_START_DATE, DEFAULT_END_DATE, SearchParameters } from '@/constants';
+import { DATA_PAGE_SIZE, DATA_START_DATE, DEFAULT_END_DATE, DEFAULT_SELECTED_PARAMS } from '@/constants';
 import { PanelBottom, PanelTop, Rows2 } from 'lucide-react';
 import useAirQuality from '@/hooks/useAirQuality';
 
@@ -17,7 +17,7 @@ export interface AirQualityData {
 }
 
 const DashboardPage = () => {
-  const [selectedParams, setSelectedParams] = useState<string[]>(SearchParameters);
+  const [selectedParams, setSelectedParams] = useState<string[]>(DEFAULT_SELECTED_PARAMS);
   const [startDate, setStartDate] = useState<Date>(DATA_START_DATE);
   const [endDate, setEndDate] = useState<Date>(DEFAULT_END_DATE);
   const [displaySetting, setDisplaySetting] = useState({
@@ -53,7 +53,7 @@ const DashboardPage = () => {
   if (isError) return <div className="p-4 text-red-500">Error loading data</div>;
 
   return (
-    <div className="p-4 sm:p-20">
+    <main className="p-4 sm:p-20">
       <Card>
         <CardHeader className='border-b'>
           <div className='flex flex-row flex-wrap gap-4 justify-between items-center'>
@@ -77,7 +77,7 @@ const DashboardPage = () => {
           )}
         </CardContent>
 
-        <CardHeader className='border-b border-t'>
+        <CardHeader className='border-t'>
           <div className='flex flex-row flex-wrap gap-4 items-center justify-center  hover:bg-muted w-fit px-4 py-2 rounded-lg m-auto'>
             <Button variant='ghost' size='lg' className='p-0 h-auto text-blue-300 hover:text-blue-500' onClick={resetDisplaySetting}>
               <Rows2 />
@@ -102,7 +102,7 @@ const DashboardPage = () => {
           )}
         </CardContent>
       </Card>
-    </div>
+    </main>
   );
 };
 
