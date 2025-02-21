@@ -14,7 +14,8 @@ const nextConfig: NextConfig = {
         { key: 'Access-Control-Allow-Methods', value: 'GET,POST' },
       ]
     }
-  ]
+  ],
+  output: "standalone",
 };
 
 export default nextConfig;
