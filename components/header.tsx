@@ -8,12 +8,12 @@ const Header = () => {
     <header className='border-grid sticky top-0 z-50 p-4 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
       <div className='flex flex-row justify-between items-center'>
         <Link href="/">
-          <h1 className="text-2xl font-semibold">Air Quality Dashboard</h1>
+          <h1 className="text-xl sm:text-2xl font-semibold">Air Quality Dashboard</h1>
         </Link>
-        <nav className='flex flex-row px-20'>
+        <nav className='flex flex-row sm:px-20'>
           <ul className='flex flex-row space-x-8'>
             <li>
-              <Link href="/api-docs" className='text-blue-800 hover:underline text-sm'>
+              <Link href="/api-docs" className='text-blue-800 hover:underline text-sm whitespace-nowrap'>
                 API Docs
               </Link>
             </li>
