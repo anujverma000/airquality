@@ -60,7 +60,7 @@ export const DataTable = ({ data, parameters }: DataTableProps) => {
       </Table>
 
       <div className={cn("flex justify-between items-center gap-2 my-4 border-t px-4 pt-4", totalPages <= 1 && 'hidden')}>
-        <p className='text-xs'>Showing {currentPage * DATA_PAGE_SIZE + 1} to {Math.min((currentPage + 1) * DATA_PAGE_SIZE, data.length)} of {data.length}</p>
+        <p className='text-xs hidden sm:block'>Showing {currentPage * DATA_PAGE_SIZE + 1} to {Math.min((currentPage + 1) * DATA_PAGE_SIZE, data.length)} of {data.length}</p>
         <div className='flex items-center gap-4'>
           <Button
             variant="outline"
