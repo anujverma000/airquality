@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  webpack: (config) => {
+    config.externals = [...config.externals, { knex: "knex" }];
+    return config;
+  },
   headers: async () => [
     {
       source: "/api/(.*)",
@@ -12,6 +16,9 @@ const nextConfig: NextConfig = {
     },
   ],
   output: "standalone",
+  experimental: {
+    optimizePackageImports: [],
+  },
 };
 
 export default nextConfig;
