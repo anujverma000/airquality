@@ -1,7 +1,9 @@
 import { getApiDocs } from '@/lib/swagger';
 import SwaggerDocs from '@/components/SwaggerUI';
 
-export default async function ApiDocsPage() {
+export const dynamic = 'force-dynamic';
+
+const Docs = () =>  {
   const spec = getApiDocs();
   return (
     <main className="px-4 sm:px-20">
@@ -9,3 +11,4 @@ export default async function ApiDocsPage() {
     </main>
   );
 }
+export default Docs
