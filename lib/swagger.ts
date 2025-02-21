@@ -1,6 +1,8 @@
-import { createSwaggerSpec } from "next-swagger-doc";
-import fs from "fs/promises";
-import path from "path";
+/* eslint-disable @typescript-eslint/no-require-imports */
+
+const { createSwaggerSpec } = require("next-swagger-doc");
+const fs = require("fs/promises");
+const path = require("path");
 
 export const generateSwaggerSpec = async () => {
   const spec = createSwaggerSpec({
@@ -25,7 +27,7 @@ export const generateSwaggerSpec = async () => {
 };
 
 export const getApiDocs = async () => {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV === "production") {
     const specPath = path.join(process.cwd(), "public", "swagger.json");
     const specContent = await fs.readFile(specPath, "utf8");
     return JSON.parse(specContent);
