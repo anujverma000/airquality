@@ -50,7 +50,7 @@ npx prisma migrate dev
 npx prisma db push
 ```
 
-> Note: No seed is required as the data is uploaded via the api
+> Note: *No seed is required as the data is uploaded via the api*
 
 6. Upload the csv file using upload api
 ```bash
@@ -68,9 +68,10 @@ curl -X POST -H "Content-Type: text/csv" --data-binary  @/path_to_data/AirQualit
 
 Lets look with api docs
 
-```bash
-http://localhost:3000/api/docs
-```
+
+[https://airquality-anuj.vercel.app/api-docs](https://airquality-anuj.vercel.app/api-docs)
+
+[http://localhost:3000/api-docs](http://localhost:3000/api-docs)
 
 
 ## Query data with api
@@ -78,7 +79,7 @@ http://localhost:3000/api/docs
 http://localhost:3000/api/time-series?parameters=Temperature__CO&start_date=2004-03-10&end_date=2004-4-10
 ```
 
-> Note: The parameters are case sensitive and should be separated by '__' (double underscore), the date should be in the format `YYYY-MM-DD`
+> Note: *The parameters are case sensitive and should be separated by '__' (double underscore), the date should be in the format `YYYY-MM-DD`*
 
 ## Feaatues included
 - Multiple chart types (Line chart and Bar chart) for data visualization

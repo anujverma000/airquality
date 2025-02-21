@@ -38,7 +38,7 @@ const CACHE_MAX_AGE = 60 // cache for 1 minute
  *       - Time Series
  *     parameters:
  *       - in: query
- *         name: parameter
+ *         name: parameters
  *         required: true
  *         schema:
  *           type: string
