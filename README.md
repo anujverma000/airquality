@@ -3,7 +3,7 @@ Analyze and visualize air quality data.
 
 ## Dataset Details
 The dataset provided contains 9,358 hourly records collected from March 2004 to February
-2005 by an air quality monitoring device located in an Italian city. It includes the following fields:
+2005 by an air quality monitoring device located in an Italian city.
 
 ## Tech Stack
 - Next.js
@@ -44,6 +44,12 @@ Rename the `.env.example` to `.env` and set postgress databse connention url
 ```bash
 npx prisma migrate dev
 ```
+
+6. Push to db
+```bash
+npx prisma db push
+```
+
 > Note: No seed is required as the data is uploaded via the api
 
 6. Upload the csv file using upload api

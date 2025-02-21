@@ -34,12 +34,12 @@ export const Controls = ({
       placeholder="Select parameters"
       preText="Selected Parameters"
     />
-    <DateRangePicker 
-      from={startDate} 
-      to={endDate} 
-      onStartDateChange={onStartDateChange} 
-      onEndDateChange={onEndDateChange} 
+    <DateRangePicker
+      from={startDate}
+      to={endDate}
+      onStartDateChange={onStartDateChange}
+      onEndDateChange={onEndDateChange}
       min={DATA_START_DATE}
-      max={DATA_END_DATE}/>
+      max={DATA_END_DATE} />
   </div>
 );
