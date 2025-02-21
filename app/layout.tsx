@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import { Inter } from 'next/font/google';
 import { QueryProvider } from './providers/QueryProvider';
 import { ThemeProvider } from './providers/ThemeProvider';
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Footer />
           </QueryProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
