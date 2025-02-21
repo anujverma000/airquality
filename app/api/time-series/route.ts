@@ -30,8 +30,8 @@ export const dynamic = 'force-dynamic'
 const CACHE_MAX_AGE = 60 // cache for 1 minute
 
 /**
- * @openapi
- * /time-series:
+ * @swagger
+ * /api/time-series:
  *   get:
  *     summary: Get time series data for a specific parameter
  *     tags:

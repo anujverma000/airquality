@@ -10,8 +10,8 @@ export const getApiDocs = () => {
         description: 'API for air quality data analysis',
       },
       servers: [
-        { url: 'https://airquality-anuj.vercel.app/api', description: 'Production server' },
-        { url: 'http://localhost:3000/api', description: 'Local server' },
+        { url: 'https://airquality-anuj.vercel.app', description: 'Production server' },
+        { url: 'http://localhost:3000', description: 'Local server' },
       ],
     },
     apiFolder: 'app/api',

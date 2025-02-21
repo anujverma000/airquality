@@ -5,8 +5,8 @@ import Papa from 'papaparse'
 export const dynamic = 'force-dynamic' // Disable static optimization
 
 /**
- * @openapi
- * /upload:
+ * @swagger
+ * /api/upload:
  *   post:
  *     summary: Upload air quality data from CSV
  *     description: Endpoint for ingesting air quality data in CSV format
