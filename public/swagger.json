@@ -1,0 +1,166 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Air Quality API",
+    "version": "1.0.0",
+    "description": "API for air quality data analysis"
+  },
+  "servers": [
+    {
+      "url": "https://airquality-anuj.vercel.app",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/api/time-series": {
+      "get": {
+        "summary": "Get time series data for a specific parameter",
+        "tags": [
+          "Time Series"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "parameters",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CO",
+                "PT08_S1_CO",
+                "NMHC",
+                "Benzene",
+                "PT08_S2_NMHC",
+                "NOx",
+                "PT08_S3_NOx",
+                "NO2",
+                "PT08_S4_NO2",
+                "PT08_S5_O3",
+                "Temperature",
+                "Humidity",
+                "Absolute_Humidity"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "start_date",
+            "schema": {
+              "type": "date",
+              "format": "date"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end_date",
+            "schema": {
+              "type": "date",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Time series data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "timestamp": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "value": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/upload": {
+      "post": {
+        "summary": "Upload air quality data from CSV",
+        "description": "Endpoint for ingesting air quality data in CSV format",
+        "tags": [
+          "Data Ingestion"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "CSV file containing air quality data"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "CSV data uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "count": {
+                      "type": "integer",
+                      "description": "Number of records inserted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request or missing file"
+          },
+          "405": {
+            "description": "Method not allowed"
+          },
+          "500": {
+            "description": "Server error during file processing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": []
+}
