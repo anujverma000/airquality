@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from 'next/server'
 import prisma from '@/lib/prisma'
 import Papa from 'papaparse'
 
-export const dynamic = 'force-dynamic' // Disable static optimization
+export const dynamic = 'force-dynamic'
 
 /**
  * @swagger

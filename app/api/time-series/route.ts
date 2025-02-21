@@ -26,7 +26,9 @@ const REVERSE_PARAM_MAP = Object.entries(PARAM_MAP).reduce((acc, [key, value]) =
 }, {} as Record<DbKey, DisplayKey>);
 
 const DEFAULT_ALL_PARAMETERS = Object.keys(PARAM_MAP)
+
 export const dynamic = 'force-dynamic'
+
 const CACHE_MAX_AGE = 60 // cache for 1 minute
 
 /**
