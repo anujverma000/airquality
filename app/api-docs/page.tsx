@@ -1,13 +1,14 @@
-import { getApiDocs } from '@/lib/swagger';
-import SwaggerDocs from '@/components/SwaggerUI';
+// import { getApiDocs } from '@/lib/swagger';
+// import SwaggerDocs from '@/components/SwaggerUI';
 
 export const dynamic = 'force-dynamic';
 
 const Docs = () =>  {
-  const spec = getApiDocs();
+  // const spec = getApiDocs();
   return (
     <main className="px-4 sm:px-20">
-      <SwaggerDocs spec={spec} />
+      API Docs
+      {/* <SwaggerDocs spec={spec} /> */}
     </main>
   );
 }
