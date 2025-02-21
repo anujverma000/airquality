@@ -55,7 +55,7 @@ const MultiSelect = ({ placeholder, options, selectedOptions, setSelectedOptions
       <PopoverTrigger asChild>
         <Button variant={"outline"}
           className={cn(
-            "w-fit justify-start text-left font-normal",
+            "w-fit justify-start text-left font-normal bg-transparent",
             selected.length == 0 && "text-muted-foreground"
           )}>
           {selectedOptions.length > 0 ? <><span className='hidden sm:block'>{preText}</span><SelectedOptions selectedOptions={selectedOptions} /></> : placeholder}

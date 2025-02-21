@@ -53,7 +53,7 @@ function DateRangePicker({
           id="date"
           variant={"outline"}
           className={cn(
-            "w-64 justify-start text-left font-normal",
+            "w-64 justify-start text-left font-normal bg-transparent",
             !date && "text-muted-foreground"
           )}
         >

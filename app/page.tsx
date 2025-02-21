@@ -79,13 +79,28 @@ const DashboardPage = () => {
 
         <CardHeader className='border-t'>
           <div className='flex flex-row flex-wrap gap-4 items-center justify-center  hover:bg-muted w-fit px-4 py-2 rounded-lg m-auto'>
-            <Button variant='ghost' size='lg' className='p-0 h-auto text-blue-300 hover:text-blue-500' onClick={resetDisplaySetting}>
+            <Button 
+              variant='ghost' 
+              size='lg' 
+              data-active={displaySetting.chart === true && displaySetting.table === true}
+              className='p-0 h-auto text-blue-300 data-[active=true]:text-blue-500 hover:text-blue-500 hover:bg-transparent' 
+              onClick={resetDisplaySetting}>
               <Rows2 />
             </Button>
-            <Button variant='ghost' size='lg' className='p-0 h-auto text-blue-300 hover:text-blue-500' onClick={hideTable}>
+            <Button 
+              variant='ghost'
+              size='lg'
+              data-active={displaySetting.chart === true && displaySetting.table === false}
+              className='p-0 h-auto text-blue-300 data-[active=true]:text-blue-500 hover:text-blue-500 hover:bg-transparent'
+              onClick={hideTable}>
               <PanelBottom />
             </Button>
-            <Button variant='ghost' size='lg' className='p-0 h-auto text-blue-300 hover:text-blue-500' onClick={hideChart}>
+            <Button
+              variant='ghost'
+              size='lg'
+              data-active={displaySetting.chart === false && displaySetting.table === true}
+              className='p-0 h-auto text-blue-300 data-[active=true]:text-blue-500 hover:text-blue-500 hover:bg-transparent'
+              onClick={hideChart}>
               <PanelTop />
             </Button>
           </div>

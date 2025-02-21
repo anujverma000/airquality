@@ -10,7 +10,7 @@ const Footer = () => {
           Developed by <a href="https://www.linkedin.com/in/anujverma000/" className='text-blue-500 hover:underline'>Anuj Verma</a>
         </p>
         <p className='text-muted-foreground text-xs pt-4'>
-          © {new Date().getFullYear()} All Rights Reserved. 
+          © {new Date().getFullYear()} All Rights Reserved
         </p>
       </Card>
     </footer>

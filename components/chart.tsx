@@ -90,7 +90,7 @@ export const AirQualityChart = ({ data, parameters }: ChartProps) => {
             <button
               key={chart}
               data-active={charType === chart}
-              className="flex flex-col justify-center gap-1 p-2 rounded text-left data-[active=true]:bg-amber-300"
+              className="flex flex-col justify-center gap-1 p-2 rounded text-left data-[active=true]:bg-amber-300 dark:data-[active=true]:bg-cyan-700"
               onClick={() => setChartType(chart)}
             >
               <span className="text-xs">
