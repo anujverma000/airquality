@@ -63,7 +63,7 @@ const MultiSelect = ({ placeholder, options, selectedOptions, setSelectedOptions
       </PopoverTrigger>
       <PopoverContent className="w-80">
         <div className="flex flex-row border-b items-center justify-between p-2 w-full">
-          <Button className="text-blue-800 text-xs p-0 h-fit" variant="link" onClick={selectAll}>Select All</Button>
+          <Button className="text-blue-800 dark:text-blue-400 text-xs p-0 h-fit" variant="link" onClick={selectAll}>Select All</Button>
         </div>
         {options.map(({ label, value }, index) => {
           return (
@@ -82,7 +82,7 @@ const MultiSelect = ({ placeholder, options, selectedOptions, setSelectedOptions
                   {label}
                 </Label>
               </div>
-              <Button className="text-blue-800 text-xs p-0 hidden group-hover:block h-fit" variant="link" onClick={() => selectOnly(value)}>Only</Button>
+              <Button className="text-blue-800 dark:text-blue-400 text-xs p-0 hidden group-hover:block h-fit" variant="link" onClick={() => selectOnly(value)}>Only</Button>
             </div>
           );
         })}
